@@ -23,8 +23,6 @@ def get_sp500_components():
     tickers_companies_dict = dict(zip(df["Symbol"], df["Security"]))
     return tickers, tickers_companies_dict
 
-print(get_sp500_components())
-
 
 @st.cache_data 
 def load_data(symbol, start, end):
