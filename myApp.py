@@ -14,7 +14,8 @@ import cufflinks as cf
 from plotly.offline import iplot
 cf.go_offline()
 
-@st.cache
+
+@st.cache_data
 def get_sp500_components():
     df = pd.read_html("https://en.wikipedia.org/wiki/List_of_S%26P_500_companies")
     df = df[0]
@@ -25,11 +26,12 @@ def get_sp500_components():
 print(get_sp500_components())
 
 
-@st.cache
+@st.cache_data 
 def load_data(symbol, start, end):
-    return yf.download(symbol, start, end)
+    return yf.download(symbol, start, end, progress=False)
 
-@st.cache
+
+@st.cache_data 
 def convert_df_to_csv(df):
     return df.to_csv().encode("utf-8")
 
@@ -61,7 +63,7 @@ sma_periods= exp_sma.number_input(
 
 exp_bb = st.sidebar.expander("Bollinger Bands")
 bb_flag = exp_bb.checkbox(label="Add Bollinger Bands")
-bb_periods= exp_bb.number_input(label="BB Periods", min_value=1, max_value=50, alue=20, step=1)
+bb_periods= exp_bb.number_input(label="BB Periods", min_value=1, max_value=50, value=20, step=1)
 
 bb_std= exp_bb.number_input(label="# of standard deviations",
     min_value=1, max_value=4,
@@ -101,7 +103,7 @@ df = load_data(ticker, start_date, end_date)
 
 data_exp = st.expander("Preview data")
 available_cols = df.columns.tolist()
-    columns_to_show = data_exp.multiselect(
+columns_to_show = data_exp.multiselect(
     "Columns",
     available_cols,
     default=available_cols)
