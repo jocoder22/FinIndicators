@@ -36,11 +36,11 @@ def convert_df_to_csv(df):
 st.sidebar.header("Stock Parameters")
 available_tickers, tickers_companies_dict = get_sp500_components()
 
-ticker = st.sidebar.selectbox("Ticker", available_tickers, format_func=tickers_companies_dict.get )
+ticker = st.sidebar.selectbox("Ticker", available_tickers, format_func=tickers_companies_dict.get)
 
 start_date = st.sidebar.date_input("Start date", datetime.date(2019, 1, 1))
-
 end_date = st.sidebar.date_input( "End date", datetime.date.today())
+
 
 if start_date > end_date:
     st.sidebar.error("The end date must fall after the start date")
